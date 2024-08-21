@@ -41,6 +41,8 @@ final class AWSMutationRetryAdviceHelper {
     }
     
     /// We evaluate the error against known error codes which could result due to unavailable internet or spotty network connection.
+    /// See:
+    /// https://stackoverflow.com/questions/78114606/do-we-have-a-list-of-nsurl-error-code-values-given-by-apple-somewhere
     private static func isErrorURLDomainError(error: Error) -> Bool {
         let nsError = error as NSError
         guard nsError.domain == NSURLErrorDomain else {
@@ -51,7 +53,15 @@ final class AWSMutationRetryAdviceHelper {
              NSURLErrorDNSLookupFailed,
              NSURLErrorCannotConnectToHost,
              NSURLErrorCannotFindHost,
-             NSURLErrorTimedOut:
+            NSURLErrorTimedOut,
+            // Errors reported in our logs
+            NSURLErrorInternationalRoamingOff,
+            NSURLErrorNetworkConnectionLost,
+            NSURLErrorDNSLookupFailed,
+            NSURLErrorBadServerResponse,
+            NSURLErrorDataNotAllowed,
+            NSURLErrorCannotParseResponse,
+            NSURLErrorSecureConnectionFailed:
             return true
         default:
             break
