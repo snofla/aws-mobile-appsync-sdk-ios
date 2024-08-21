@@ -12,7 +12,7 @@ import Foundation
 final class AWSMutationRetryNotifier: Cancellable {
     private var nextSyncTimer: DispatchSourceTimer?
     private var retryAttemptNumber: Int
-    private var retryStrategy: AWSAppSyncRetryStrategy = .exponential
+    private var retryStrategy: AWSAppSyncRetryStrategy = .aggressive
     /// Ensures ordered callback of retry notification dispatch in case of multiple attempts.
     private var retryOperationQueue: OperationQueue
     private var handlerQueue: DispatchQueue = DispatchQueue.global(qos: .utility)
